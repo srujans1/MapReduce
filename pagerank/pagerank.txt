@@ -1,0 +1,66 @@
+The input and output format for the jobs
+Job1:
+     
+Mapper<Text, Text, Text, Text>
+{
+input:(Page1, page2)
+                
+output:(Page1, page2)                
+}
+
+Reducer<Text, Text, Text, Text>
+{
+input:( page1,[page2,page3,page4...])
+
+output:(page1, 1.0:page2,page3,page4)
+}
+
+Job2:
+{
+Mapper<Text, Text, Text, Text>
+input:( page1,score:page2,page3,page4)
+output:(page1,"score:links"),(page1,"links")
+}
+
+Reducer<Text, Text, Text, Text>
+{
+input:(page1,[page1,score:links])
+output:( page1,score:page2,page3,page4)
+}
+
+Job3:
+
+Mapper<Text, Text, Text, Text>
+{
+input:( page1,score:page2,page3,page4)
+output:(page1,"score")
+}
+ 
+Reducer<Text, Text, Text, Text>
+{
+//sort and output in the clean up stage
+
+input:(page1,"score")
+output:(page1,"score")
+}
+
+
+the Hadoop cluster setting you used, i.e., number of mappers and reducers
+
+m1.medium instances 6
+
+    Job1:
+         mappers: 149
+         reducers: 1
+
+    Job2:
+        for each loop:
+        mappers: 72~80
+	reducers: 1
+
+    Job3:
+         mappers: 70
+         reducers: 1
+
+- the running time for run.sh
+    2:30 hrs
